@@ -25,6 +25,18 @@ CAMPAIGNS_TABLENAME = config.get('Database Parameters', 'campaigns_table_name')
 
 CODE_VERSION = config.get('Task Parameters', 'experiment_code_version')
 
+# PsiTurk HIT status codes
+PSITURK_STATUS_CODES = [
+    'Not Accepted',
+    'Allocated',
+    'Started',
+    'Completed',
+    'Submitted',
+    'Approved',
+    'Quit Early',
+    'Bonused'
+]
+
 # Base class
 
 Base = declarative_base()
@@ -83,6 +95,17 @@ class Participant(Base):
             self.cond,
             self.status,
             self.codeversion)
+    
+    def to_dict(self):
+        return {
+            'assignmentid': self.assignmentid,
+            'workerid': self.workerid,
+            'hitid': self.hitid,
+            'status': PSITURK_STATUS_CODES[self.status],
+            'bonus': self.bonus,
+            'codeversion': self.codeversion,
+            'beginhit': self.beginhit,
+            'endhit': self.endhit}
 
     def get_trial_data(self):
         try:

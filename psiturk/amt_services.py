@@ -177,7 +177,7 @@ class MTurkServices(object):
         return hits_data
 
     @amt_service_response
-    def get_assignments(self, assignment_status=None, hit_ids=None):
+    def get_assignments(self, assignment_statuses=None, hit_ids=None):
         """Get workers."""
         if not hit_ids:
             hits = self.get_all_hits().data
@@ -191,15 +191,15 @@ class MTurkServices(object):
             args = dict(
                 HITId=hit_id
             )
-            if assignment_status:
-                args['AssignmentStatuses'] = [assignment_status]
+            if assignment_statuses:
+                args['AssignmentStatuses'] = assignment_statuses
 
             for page in paginator.paginate(**args):
                 assignments.extend(page['Assignments'])
         workers = [{
-            'hitId': assignment['HITId'],
-            'assignmentId': assignment['AssignmentId'],
-            'workerId': assignment['WorkerId'],
+            'hitid': assignment['HITId'],
+            'assignmentid': assignment['AssignmentId'],
+            'workerid': assignment['WorkerId'],
             'submit_time': assignment['SubmitTime'],
             'accept_time': assignment['AcceptTime'],
             'status': assignment['AssignmentStatus'],

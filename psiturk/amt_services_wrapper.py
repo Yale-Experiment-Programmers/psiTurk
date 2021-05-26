@@ -27,7 +27,7 @@ except ImportError:
 
 
 class WrapperResponse(object):
-    def __init__(self, status=None, message='', data: dict = None,
+    def __init__(self, status=None, message='', data=None,
                  operation='', **kwargs):
         self.dict_keys = ['status', 'success', 'message', 'data', 'operation']
         self.status = status
